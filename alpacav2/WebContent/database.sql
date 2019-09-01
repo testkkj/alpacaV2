@@ -13,3 +13,5 @@ CREATE TABLE member (
 );
 
 select * from member;
+
+update member set memberpassword="1234", memberemail="lee@mail.com", membertel="010-9999-9999" where memberid="lee";
