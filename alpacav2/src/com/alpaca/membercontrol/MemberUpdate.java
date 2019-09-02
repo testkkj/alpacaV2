@@ -43,8 +43,7 @@ public class MemberUpdate extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		
-		String id = request.getParameter("memberID");
-		System.out.println(id);
+		String id = (String) request.getSession().getAttribute("id");
 		String password = request.getParameter("memberPassword");
 		String email = request.getParameter("memberEmail");
 		String tel = request.getParameter("memberTel");

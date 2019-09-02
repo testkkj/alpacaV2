@@ -1,6 +1,7 @@
 package com.alpaca.membercontrol;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,17 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.alpaca.member.MemberDAO;
+import com.alpaca.member.MemberVO;
+
 /**
- * Servlet implementation class MemberLogout
+ * Servlet implementation class MemberDelete
  */
-@WebServlet("/MemberLogout")
-public class MemberLogout extends HttpServlet {
+@WebServlet("/MemberDelete")
+public class MemberDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberLogout() {
+    public MemberDelete() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +34,7 @@ public class MemberLogout extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -40,10 +44,22 @@ public class MemberLogout extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		
-		request.getSession().invalidate();
+		String id = (String) request.getSession().getAttribute("id");
+		String pw = request.getParameter("memberPassword");
 		
-		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-		rd.forward(request, response);
+		MemberVO vo = new MemberVO();
+		vo.setMemberID(id);
+		vo.setMemberPassword(pw);
+		
+		MemberDAO dao = new MemberDAO();
+		if (dao.memberDelete(vo)) {
+			request.getSession().invalidate();
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
+		} else {
+			RequestDispatcher rd = request.getRequestDispatcher("deleteError.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 }

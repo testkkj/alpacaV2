@@ -21,6 +21,7 @@
 	%>
 	<%=id%>님 환영합니다.
 	<a href="mypage.jsp">회원정보 수정</a>
+	<a href="delete.jsp">회원 탈퇴</a>
 	<a href="MemberLogout">로그아웃</a>
 	<%
 		}

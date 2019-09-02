@@ -19,7 +19,7 @@ MemberVO vo = dao.memberInformation(id);
 %>
 <form action="MemberUpdate" method="post">
         <label for="memberID">아이디</label>
-        <input type="text" name="memberID" id="memberID" readonly="readonly" value="<%=vo.getMemberID()%>"><br>
+        <input type="text" name="memberID" id="memberID" disabled="disabled" value="<%=vo.getMemberID()%>"><br>
         <label for="memberPassword">비밀번호</label>
         <input type="password" name="memberPassword" id="memberPassword" value="<%=vo.getMemberPassword()%>"><br>
         <label for="memberName">이름</label>

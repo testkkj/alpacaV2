@@ -24,9 +24,14 @@ public class MemberDAO {
 			ps.setString(5, vo.getMemberBirthday());
 			ps.setString(6, vo.getMemberEmail());
 			ps.setString(7, vo.getMemberTel());
-			ps.executeUpdate();
-			System.out.println("memberInsert()에서 쿼리 실행");
-			return true;
+			int result = ps.executeUpdate();
+			if (result == 1) {
+				System.out.println("memberInsert()에서 쿼리 실행");
+				return true;
+			} else if (result == 0) {
+				System.out.println("memberInsert()에서 쿼리 결과 없음");
+				return false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("memberInsert()에서 에러 발생");
@@ -46,15 +51,45 @@ public class MemberDAO {
 			ps.setString(2, vo.getMemberEmail());
 			ps.setString(3, vo.getMemberTel());
 			ps.setString(4, vo.getMemberID());
-			ps.executeUpdate();
-			System.out.println("memberUpdate()에서 쿼리 실행");
-			return true;
+			int result = ps.executeUpdate();
+			if (result == 1) {
+				System.out.println("memberUpdate()에서 쿼리 실행");
+				return true;
+			} else if (result == 0) {
+				System.out.println("memberUpdate()에서 쿼리 결과 없음");
+				return false;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("memberUpdate()에서 에러 발생");			
 		} finally {
 			dc.close(ps, con);
 			System.out.println("memberUpdate()에서 데이터베이스 접속 종료");
+		}
+		return false;
+	}
+	
+	public boolean memberDelete(MemberVO vo) {
+		try {
+			String sql = "delete from member where memberid=? and memberpassword=?";
+			con = dc.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, vo.getMemberID());
+			ps.setString(2, vo.getMemberPassword());
+			int result = ps.executeUpdate();
+			if (result == 1) {
+				System.out.println("memberDelete()에서 쿼리 실행");
+				return true;
+			} else if (result == 0) {
+				System.out.println("memberDelete()에서 쿼리 결과 없음");
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("memberDelete()에서 에러 발생");			
+		} finally {
+			dc.close(ps, con);
+			System.out.println("memberDelete()에서 데이터베이스 접속 종료");
 		}
 		return false;
 	}
