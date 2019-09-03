@@ -10,18 +10,18 @@
 </head>
 <body>
 	<%
-		if (session.getAttribute("id") == null) {
+		if (session.getAttribute("idFromServlet") == null) {
 	%>
 	첫페이지입니다.
-	<a href="join.jsp">가입하기</a>
-	<a href="login.jsp">로그인</a>
+	<a href="memberJoin.jsp">가입하기</a>
+	<a href="memberLogin.jsp">로그인</a>
 	<%
-		} else if (session.getAttribute("id") != null) {
-			String id = (String) session.getAttribute("id");
+		} else if (session.getAttribute("idFromServlet") != null) {
+			String idFromServlet = (String) session.getAttribute("idFromServlet");
 	%>
-	<%=id%>님 환영합니다.
-	<a href="mypage.jsp">회원정보 수정</a>
-	<a href="delete.jsp">회원 탈퇴</a>
+	<%=idFromServlet%>님 환영합니다.
+	<a href="memberPage.jsp">회원정보 수정</a>
+	<a href="memberDelete.jsp">회원 탈퇴</a>
 	<a href="MemberLogout">로그아웃</a>
 	<%
 		}

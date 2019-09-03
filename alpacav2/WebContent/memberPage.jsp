@@ -13,9 +13,9 @@
 <body>
 <%
 request.setCharacterEncoding("UTF-8");
-String id = (String) session.getAttribute("id");
+String idFromServlet = (String) session.getAttribute("idFromServlet");
 MemberDAO dao = new MemberDAO();
-MemberVO vo = dao.memberInformation(id);
+MemberVO vo = dao.memberInformation(idFromServlet);
 %>
 <form action="MemberUpdate" method="post">
         <label for="memberID">아이디</label>

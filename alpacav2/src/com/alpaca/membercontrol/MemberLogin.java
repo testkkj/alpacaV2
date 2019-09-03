@@ -36,7 +36,7 @@ public class MemberLogin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -53,11 +53,11 @@ public class MemberLogin extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		if (dao.memberLogin(vo)) {
 			HttpSession session = request.getSession();
-			session.setAttribute("id", vo.getMemberID());
+			session.setAttribute("idFromServlet", vo.getMemberID());
 			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("loginError.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("memberLoginError.jsp");
 			rd.forward(request, response);
 		}
 

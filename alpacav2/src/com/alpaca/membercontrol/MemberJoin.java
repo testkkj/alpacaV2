@@ -35,7 +35,7 @@ public class MemberJoin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		doPost(request, response);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class MemberJoin extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("joinError.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("memberJoinError.jsp");
 			rd.forward(request, response);
 		}
 	}

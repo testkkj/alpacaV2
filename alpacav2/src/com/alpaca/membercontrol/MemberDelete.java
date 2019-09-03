@@ -34,7 +34,7 @@ public class MemberDelete extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class MemberDelete extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		
-		String id = (String) request.getSession().getAttribute("id");
+		String id = (String) request.getSession().getAttribute("idFromServlet");
 		String pw = request.getParameter("memberPassword");
 		
 		MemberVO vo = new MemberVO();
@@ -57,7 +57,7 @@ public class MemberDelete extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("deleteError.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("memberDeleteError.jsp");
 			rd.forward(request, response);
 		}
 	}

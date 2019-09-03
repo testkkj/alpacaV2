@@ -43,7 +43,7 @@ public class MemberUpdate extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		
-		String id = (String) request.getSession().getAttribute("id");
+		String id = (String) request.getSession().getAttribute("idFromServlet");
 		String password = request.getParameter("memberPassword");
 		String email = request.getParameter("memberEmail");
 		String tel = request.getParameter("memberTel");
@@ -59,7 +59,7 @@ public class MemberUpdate extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 			rd.forward(request, response);
 		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("mypageError.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("memberPageError.jsp");
 			rd.forward(request, response);
 		}
 	}
