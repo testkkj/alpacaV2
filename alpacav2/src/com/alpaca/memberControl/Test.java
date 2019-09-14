@@ -1,4 +1,4 @@
-package com.alpaca.membercontrol;
+package com.alpaca.memberControl;
 
 import java.io.IOException;
 
@@ -8,23 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
-
-import com.alpaca.member.MemberDAO;
-import com.alpaca.member.MemberVO;
 
 /**
- * Servlet implementation class MemberLogin
+ * Servlet implementation class Test
  */
-@WebServlet("/MemberLogin")
-public class MemberLogin extends HttpServlet {
+@WebServlet("/Test")
+public class Test extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public MemberLogin() {
+	public Test() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -36,7 +31,15 @@ public class MemberLogin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request, response);
+		// uri는 www.site.com/er/er 이라면 .com 이후로/부터 끝까지
+		// url은 전체 사이트주소
+		// uri를 추출해서 원하는 자리로 잘라서 컨트롤러 구성 가능
+		String uri = request.getRequestURI();
+		String newuri = uri.substring(10);
+		StringBuffer url = request.getRequestURL();
+		System.out.println(newuri + "여기부터 url ->" + url);
+		RequestDispatcher rd = request.getRequestDispatcher("test.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -46,21 +49,7 @@ public class MemberLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		MemberVO vo = new MemberVO();
-		vo.setMemberID(request.getParameter("memberID"));
-		vo.setMemberPassword(request.getParameter("memberPassword"));
-
-		MemberDAO dao = new MemberDAO();
-		if (dao.memberLogin(vo)) {
-			HttpSession session = request.getSession();
-			session.setAttribute("idFromServlet", vo.getMemberID());
-			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-			rd.forward(request, response);
-		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("memberLoginError.jsp");
-			rd.forward(request, response);
-		}
-
+		doGet(request, response);
 	}
 
 }

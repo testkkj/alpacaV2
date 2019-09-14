@@ -23,6 +23,7 @@
 	<a href="memberPage.jsp">회원정보 수정</a>
 	<a href="memberDelete.jsp">회원 탈퇴</a>
 	<a href="MemberLogout">로그아웃</a>
+	<a href="boardList.jsp">게시판</a>
 	<%
 		}
 	%>

@@ -1,4 +1,4 @@
-package com.alpaca.membercontrol;
+package com.alpaca.memberControl;
 
 import java.io.IOException;
 
@@ -10,20 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.alpaca.member.MemberDAO;
-import com.alpaca.member.MemberVO;
-
 /**
- * Servlet implementation class MemberUpdate
+ * Servlet implementation class MemberLogout
  */
-@WebServlet("/MemberUpdate")
-public class MemberUpdate extends HttpServlet {
+@WebServlet("/MemberLogout")
+public class MemberLogout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberUpdate() {
+    public MemberLogout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,25 +40,10 @@ public class MemberUpdate extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		
-		String id = (String) request.getSession().getAttribute("idFromServlet");
-		String password = request.getParameter("memberPassword");
-		String email = request.getParameter("memberEmail");
-		String tel = request.getParameter("memberTel");
+		request.getSession().invalidate();
 		
-		MemberVO vo = new MemberVO();
-		vo.setMemberID(id);
-		vo.setMemberPassword(password);
-		vo.setMemberEmail(email);
-		vo.setMemberTel(tel);
-		
-		MemberDAO dao = new MemberDAO();
-		if (dao.memberUpdate(vo)) {
-			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-			rd.forward(request, response);
-		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("memberPageError.jsp");
-			rd.forward(request, response);
-		}
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
 	}
 
 }

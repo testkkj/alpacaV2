@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 
 public class DatabaseConnection {
 
-	public Connection getConnection() {
+	public static Connection getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/alpaca?characterEncoding=UTF8", "root", "1234");
@@ -20,7 +20,7 @@ public class DatabaseConnection {
 		return null;
 	}
 
-	public void close(PreparedStatement ps, Connection con) {
+	public static void close(PreparedStatement ps, Connection con) {
 		try {
 			if (ps != null) {
 				ps.close();
@@ -35,7 +35,7 @@ public class DatabaseConnection {
 		}
 	}
 
-	public void close(ResultSet rs, PreparedStatement ps, Connection con) {
+	public static void close(ResultSet rs, PreparedStatement ps, Connection con) {
 		try {
 			if (rs != null) {
 				rs.close();

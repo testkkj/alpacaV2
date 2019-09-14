@@ -9,6 +9,23 @@
 <title>Document</title>
 </head>
 <body>
-TEST PAGE
+	<table>
+		<tr>
+			<td>글 제목</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>글 작성자</td>
+			<td>1</td>
+			<td>글 작성일</td>
+			<td>1</td>
+			<td>글 조회수</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>글 내용</td>
+			<td>1</td>
+		</tr>
+	</table>
 </body>
 </html>

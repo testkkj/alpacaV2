@@ -9,6 +9,6 @@
 <title>Document</title>
 </head>
 <body>
-TEST PAGE
+가입에러.
 </body>
 </html>

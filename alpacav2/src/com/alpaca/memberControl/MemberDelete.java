@@ -1,4 +1,4 @@
-package com.alpaca.membercontrol;
+package com.alpaca.memberControl;
 
 import java.io.IOException;
 import java.io.PrintWriter;

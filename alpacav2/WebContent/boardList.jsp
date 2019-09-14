@@ -9,6 +9,22 @@
 <title>Document</title>
 </head>
 <body>
-TEST PAGE
+	<table>
+		<tr>
+			<th>글 번호</th>
+			<th>글 제목</th>
+			<th>글 작성자</th>
+			<th>글 작성일</th>
+			<th>글 조회수</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>1</td>
+			<td>1</td>
+			<td>1</td>
+			<td>1</td>
+		</tr>
+	</table>
+	<a href="boardWrite.jsp">글쓰기</a>
 </body>
 </html>
