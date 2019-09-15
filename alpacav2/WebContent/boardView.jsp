@@ -1,3 +1,5 @@
+<%@page import="com.alpaca.board.BoardVo"%>
+<%@page import="com.alpaca.board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,22 +11,25 @@
 <title>Document</title>
 </head>
 <body>
+	<%
+		BoardVo vo = (BoardVo) request.getAttribute("boardView");
+	%>
 	<table>
 		<tr>
 			<td>글 제목</td>
-			<td>1</td>
+			<td><%=vo.getBoardTitle()%></td>
 		</tr>
 		<tr>
 			<td>글 작성자</td>
-			<td>1</td>
+			<td><%=vo.getBoardWriter()%></td>
 			<td>글 작성일</td>
-			<td>1</td>
+			<td><%=vo.getBoardRegister()%></td>
 			<td>글 조회수</td>
-			<td>1</td>
+			<td><%=vo.getBoardHits()%></td>
 		</tr>
 		<tr>
 			<td>글 내용</td>
-			<td>1</td>
+			<td><%=vo.getBoardContents()%></td>
 		</tr>
 	</table>
 </body>
