@@ -25,3 +25,15 @@ CREATE TABLE board (
 );
 
 select * from board;
+
+CREATE TABLE comment (
+    boardnumber INT(10) NOT NULL,
+    commentnumber INT(10) PRIMARY KEY AUTO_INCREMENT,
+    commentparent INT(10) NOT NULL DEFAULT 0,
+    commentchild INT(10) NOT NULL DEFAULT 0,
+    commentcontents VARCHAR(300) NOT NULL,
+    commentwriter VARCHAR(100) NOT NULL,
+    commentregister DATETIME NOT NULL DEFAULT NOW()
+);
+
+select * from comment;

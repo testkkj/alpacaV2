@@ -11,18 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alpaca.board.BoardDAO;
 import com.alpaca.board.BoardVo;
+import com.alpaca.comment.CommentDAO;
+import com.alpaca.comment.CommentVO;
 
 /**
  * Servlet implementation class boardView
  */
-@WebServlet("/boardView")
-public class boardView extends HttpServlet {
+@WebServlet("/BoardView")
+public class BoardView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public boardView() {
+	public BoardView() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

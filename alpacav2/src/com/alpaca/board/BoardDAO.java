@@ -1,5 +1,6 @@
 package com.alpaca.board;
 
+import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -124,6 +125,56 @@ public class BoardDAO {
 		} finally {
 			DatabaseConnection.close(ps, con);
 			System.out.println("boardWrite()에서 데이터베이스 접속 종료");
+		}
+		return false;
+	}
+
+	public boolean boardUpdate(String boardTitle, String boardContents, int boardNumber) {
+		try {
+			String sql = "update board set boardtitle = ?, boardcontents = ? where boardnumber = ?";
+			con = DatabaseConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, boardTitle);
+			ps.setString(2, boardContents);
+			ps.setInt(3, boardNumber);
+			int result = ps.executeUpdate();
+			if (result == 1) {
+				System.out.println("boardUpdate()에서 쿼리 실행");
+				return true;
+			} else if (result == 0) {
+				System.out.println("boardUpdate()에서 쿼리 결과 없음");
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("boardUpdate()에서 에러 발생");
+		} finally {
+			DatabaseConnection.close(rs, ps, con);
+			System.out.println("boardUpdate()에서 데이터베이스 접속 종료");
+		}
+		return false;
+	}
+
+	public boolean boardDelete(int boardNumber) {
+		try {
+			String sql = "delete from board where boardnumber = ?";
+			con = DatabaseConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, boardNumber);
+			int result = ps.executeUpdate();
+			if (result == 1) {
+				System.out.println("boardDelete()에서 쿼리 실행");
+				return true;
+			} else if (result == 0) {
+				System.out.println("boardDelete()에서 쿼리 결과 없음");
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("boardDelete()에서 에러 발생");
+		} finally {
+			DatabaseConnection.close(rs, ps, con);
+			System.out.println("boardDelete()에서 데이터베이스 접속 종료");
 		}
 		return false;
 	}

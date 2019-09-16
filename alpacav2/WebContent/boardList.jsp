@@ -24,16 +24,20 @@
 			<th>글 작성일</th>
 			<th>글 조회수</th>
 		</tr>
-		<% for(int i = 0; i < arrayList.size(); i++) { %>
+		<%
+			for (int i = 0; i < arrayList.size(); i++) {
+		%>
 		<tr>
-			<td><%=arrayList.get(i).getBoardNumber() %></td>
-			<td><a href="boardView?number=<%=arrayList.get(i).getBoardNumber()%>"><%=arrayList.get(i).getBoardTitle() %></a></td>
-			<td><%=arrayList.get(i).getBoardWriter() %></td>
-			<td><%=arrayList.get(i).getBoardRegister() %></td>
-			<td><%=arrayList.get(i).getBoardHits() %></td>
+			<td><%=arrayList.get(i).getBoardNumber()%></td>
+			<td><a href="BoardView?number=<%=arrayList.get(i).getBoardNumber()%>"><%=arrayList.get(i).getBoardTitle()%></a></td>
+			<td><%=arrayList.get(i).getBoardWriter()%></td>
+			<td><%=arrayList.get(i).getBoardRegister()%></td>
+			<td><%=arrayList.get(i).getBoardHits()%></td>
 		</tr>
-		<% } %>
+		<%
+			}
+		%>
 	</table>
-	<a href="boardWrite.jsp">글쓰기</a>
+	<a href="boardWrite.jsp">글작성</a>
 </body>
 </html>
