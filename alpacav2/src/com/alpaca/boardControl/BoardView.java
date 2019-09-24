@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alpaca.board.BoardDAO;
-import com.alpaca.board.BoardVo;
-import com.alpaca.comment.CommentDAO;
-import com.alpaca.comment.CommentVO;
+import com.alpaca.board.BoardVO;
 
 /**
  * Servlet implementation class boardView
@@ -52,7 +50,7 @@ public class BoardView extends HttpServlet {
 
 		BoardDAO dao = new BoardDAO();
 		dao.boardHits(boardNumber);
-		BoardVo vo = dao.boardView(boardNumber);
+		BoardVO vo = dao.boardView(boardNumber);
 		request.setAttribute("boardView", vo);
 
 		RequestDispatcher rd = request.getRequestDispatcher("boardView.jsp");

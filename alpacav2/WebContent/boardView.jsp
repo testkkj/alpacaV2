@@ -1,7 +1,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.alpaca.comment.CommentDAO"%>
 <%@page import="com.alpaca.comment.CommentVO"%>
-<%@page import="com.alpaca.board.BoardVo"%>
+<%@page import="com.alpaca.board.BoardVO"%>
 <%@page import="com.alpaca.board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -15,7 +15,7 @@
 </head>
 <body>
 	<%
-		BoardVo vo = (BoardVo) request.getAttribute("boardView");
+		BoardVO vo = (BoardVO) request.getAttribute("boardView");
 	%>
 	<table>
 		<tr>

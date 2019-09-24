@@ -1,6 +1,5 @@
 package com.alpaca.board;
 
-import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,31 +12,30 @@ public class BoardDAO {
 	PreparedStatement ps;
 	ResultSet rs;
 
-	public ArrayList<BoardVo> boardList() {
+	public ArrayList<BoardVO> boardList(int pageNumber) {
+		int range = boardNextNumber()-(pageNumber-1)*10;
 		try {
-			String sql = "select * from board order by boardnumber desc";
+			String sql = "select * from board where boardnumber < ? order by boardnumber desc limit 10";
 			con = DatabaseConnection.getConnection();
 			ps = con.prepareStatement(sql);
+			ps.setInt(1, range);
 			rs = ps.executeQuery();
-			ArrayList<BoardVo> arrayList = new ArrayList<BoardVo>();
-			if (rs.next()) {
-				while (rs.next()) {
-					BoardVo vo = new BoardVo();
-					vo.setBoardNumber(rs.getInt(1));
-					vo.setBoardTitle(rs.getString(2));
-					vo.setBoardContents(rs.getString(3));
-					vo.setBoardWriter(rs.getString(4));
-					vo.setBoardRegister(rs.getString(5));
-					vo.setBoardHits(rs.getInt(6));
-					vo.setBoardRecommend(rs.getInt(7));
+			ArrayList<BoardVO> arrayList = new ArrayList<BoardVO>();
+			while (rs.next()) {
+				BoardVO vo = new BoardVO();
+				vo.setBoardNumber(rs.getInt(1));
+				vo.setBoardTitle(rs.getString(2));
+				vo.setBoardContents(rs.getString(3));
+				vo.setBoardWriter(rs.getString(4));
+				vo.setBoardRegister(rs.getString(5));
+				vo.setBoardHits(rs.getInt(6));
+				vo.setBoardRecommend(rs.getInt(7));
 
-					arrayList.add(vo);
-				}
-				System.out.println("boardList()에서 쿼리 실행");
-				return arrayList;
+				arrayList.add(vo);
+
 			}
-			System.out.println("boardView()에서 쿼리 결과 없음");
-			return null;
+			System.out.println("boardList()에서 쿼리 실행");
+			return arrayList;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("boardList()에서 에러 발생");
@@ -48,7 +46,25 @@ public class BoardDAO {
 		return null;
 	}
 
-	public BoardVo boardView(int boardNumber) {
+	public int boardNextNumber() {
+		try {
+			String sql = "select boardnumber from board order by boardnumber desc";
+			con = DatabaseConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1)+1;
+			}
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseConnection.close(rs, ps, con);
+		}
+		return -1;
+	}
+
+	public BoardVO boardView(int boardNumber) {
 		try {
 			String sql = "select * from board where boardnumber = ?";
 			con = DatabaseConnection.getConnection();
@@ -56,7 +72,7 @@ public class BoardDAO {
 			ps.setInt(1, boardNumber);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				BoardVo vo = new BoardVo();
+				BoardVO vo = new BoardVO();
 				vo.setBoardNumber(rs.getInt(1));
 				vo.setBoardTitle(rs.getString(2));
 				vo.setBoardContents(rs.getString(3));
@@ -103,7 +119,7 @@ public class BoardDAO {
 		return false;
 	}
 
-	public boolean boardWrite(BoardVo vo) {
+	public boolean boardWrite(BoardVO vo) {
 		try {
 			String sql = "insert into board (boardtitle, boardcontents, boardwriter) values(?,?,?)";
 			con = DatabaseConnection.getConnection();

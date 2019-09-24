@@ -1,3 +1,5 @@
+CREATE SCHEMA `alpaca` DEFAULT CHARACTER SET utf8 ;
+
 use alpaca;
 
 CREATE TABLE member (
@@ -5,14 +7,17 @@ CREATE TABLE member (
     memberpassword VARCHAR(100) NOT NULL,
     membername VARCHAR(100) NOT NULL,
     membergender VARCHAR(100) NOT NULL,
-    memberbirthday INT(10) NOT NULL,
+    memberbirthday VARCHAR(100) NOT NULL,
     memberemail VARCHAR(100) NOT NULL,
-    membertel INT(10) NOT NULL,
+    membertel VARCHAR(100) NOT NULL,
     memberregister DATETIME NOT NULL DEFAULT NOW(),
     membermanager INT(1) NOT NULL DEFAULT 0
 );
 
-select * from member;
+SELECT 
+    *
+FROM
+    member;
 
 CREATE TABLE board (
     boardnumber INT(10) PRIMARY KEY AUTO_INCREMENT,
@@ -24,7 +29,10 @@ CREATE TABLE board (
     boardrecommend INT(10) NOT NULL DEFAULT 0
 );
 
-select * from board;
+SELECT 
+    *
+FROM
+    board;
 
 CREATE TABLE comment (
     boardnumber INT(10) NOT NULL,
@@ -36,4 +44,7 @@ CREATE TABLE comment (
     commentregister DATETIME NOT NULL DEFAULT NOW()
 );
 
-select * from comment;
+SELECT 
+    *
+FROM
+    comment;

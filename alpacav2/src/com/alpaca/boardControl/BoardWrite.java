@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alpaca.board.BoardDAO;
-import com.alpaca.board.BoardVo;
+import com.alpaca.board.BoardVO;
 
 /**
  * Servlet implementation class BoardWrite
@@ -48,15 +48,14 @@ public class BoardWrite extends HttpServlet {
 
 		String id = (String) request.getSession().getAttribute("idFromServlet");
 
-		BoardVo vo = new BoardVo();
+		BoardVO vo = new BoardVO();
 		vo.setBoardTitle(request.getParameter("boardTitle"));
 		vo.setBoardContents(request.getParameter("boardContents"));
 		vo.setBoardWriter(id);
 
 		BoardDAO dao = new BoardDAO();
 		if (dao.boardWrite(vo)) {
-			RequestDispatcher rd = request.getRequestDispatcher("boardList.jsp");
-			rd.forward(request, response);
+			response.sendRedirect("boardList.jsp");
 		} else {
 			RequestDispatcher rd = request.getRequestDispatcher("boardListError.jsp");
 			rd.forward(request, response);

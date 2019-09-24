@@ -1,4 +1,4 @@
-<%@page import="com.alpaca.board.BoardVo"%>
+<%@page import="com.alpaca.board.BoardVO"%>
 <%@page import="com.alpaca.board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -13,8 +13,8 @@
 <body>
 	<%
 		int boardNumber = Integer.parseInt(request.getParameter("boardNumber"));
-		BoardDAO dao = new BoardDAO();
-		BoardVo vo = dao.boardView(boardNumber);
+			BoardDAO dao = new BoardDAO();
+			BoardVO vo = dao.boardView(boardNumber);
 	%>
 	<form action="BoardUpdate?boardNumber=<%=boardNumber %>" method="post">
 		<label for="boardTitle">글 제목</label>

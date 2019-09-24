@@ -1,6 +1,6 @@
 package com.alpaca.board;
 
-public class BoardVo {
+public class BoardVO {
 	private int boardNumber;
 	private String boardTitle;
 	private String boardContents;
