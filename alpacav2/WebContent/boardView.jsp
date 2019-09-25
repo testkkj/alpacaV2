@@ -43,12 +43,7 @@
 	<%
 		}
 	%>
-	<form action="CommentWrite?boardNumber=<%=vo.getBoardNumber()%>"
-		method="post">
-		<textarea id="commentContents" name="commentContents" rows="5"
-			cols="50"></textarea>
-		<input type="submit" value="댓글쓰기">
-	</form>
+	<a href="commentWrite.jsp?boardNumber=<%=vo.getBoardNumber()%>">댓글 작성</a>
 	<%
 		CommentDAO cdao = new CommentDAO();
 		ArrayList<CommentVO> arrayList = cdao.commentList(vo.getBoardNumber());
@@ -64,6 +59,7 @@
 			<td><%=arrayList.get(i).getCommentWriter()%></td>
 			<td>댓글작성일</td>
 			<td><%=arrayList.get(i).getCommentRegister()%></td>
+			<td><a href="commentReplyWrite.jsp?boardNumber=<%=vo.getBoardNumber()%>&commentnumber=<%=arrayList.get(i).getCommentNumber()%>">답글 작성</a></td>
 		</tr>
 	</table>
 	<%

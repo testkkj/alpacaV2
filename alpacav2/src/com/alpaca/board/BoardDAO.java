@@ -63,6 +63,27 @@ public class BoardDAO {
 		}
 		return -1;
 	}
+	
+	public boolean boardNextPage(int pageNumber) {
+		int range = boardNextNumber()-(pageNumber-1)*10;
+		try {
+			String sql = "select * from board where boardnumber < ? order by boardnumber desc limit 10";
+			con = DatabaseConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, range);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("boardList()에서 에러 발생");
+		} finally {
+			DatabaseConnection.close(rs, ps, con);
+			System.out.println("boardList()에서 데이터베이스 접속 종료");
+		}
+		return false;
+	}
 
 	public BoardVO boardView(int boardNumber) {
 		try {

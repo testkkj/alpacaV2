@@ -18,7 +18,7 @@
 		servlet에서 arraylist<e>를 받아올때 형변환 경고 무시용
 		*/
 		int pageNumber = 1;
-		if(request.getParameter("pageNumber")!=null){
+		if (request.getParameter("pageNumber") != null) {
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
 		BoardDAO dao = new BoardDAO();
@@ -47,14 +47,34 @@
 			}
 		%>
 	</table>
-	<%=dao.boardNextNumber() %>
-	<%
-	int tpage = dao.boardNextNumber()/10;%>
-	<%for(int i=0;i<tpage;i++){
+	<%=dao.boardNextNumber()%>
+	<%if(pageNumber!=1){
 		%>
-		<a href="boardList.jsp?pageNumber=<%=i%>"><%=i %></a>
+		<a href="boardList.jsp?pageNumber=<%=pageNumber-1%>">이전</a>
 		<%
-	} %>
+	} if(dao.boardNextPage(pageNumber+1)) {
+		%>
+		<a href="boardList.jsp?pageNumber=<%=pageNumber+1%>">다음</a>
+		<%
+	}%>
+	<%
+		int tpage = dao.boardNextNumber();
+		if (tpage%10==0) {
+			tpage = tpage/10;
+			for (int i = 1; i <= tpage; i++) {
+	%>
+	<a href="boardList.jsp?pageNumber=<%=i%>"><%=i%></a>
+	<%
+		}
+		} else {
+			tpage = (tpage/10)+1;
+			for (int i = 1; i <= tpage; i++) {
+	%>
+	<a href="boardList.jsp?pageNumber=<%=i%>"><%=i%></a>
+	<%
+		}
+		}
+	%>
 	<a href="boardWrite.jsp">글작성</a>
 </body>
 </html>
