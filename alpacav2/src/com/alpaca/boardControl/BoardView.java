@@ -46,7 +46,7 @@ public class BoardView extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 
-		int boardNumber = Integer.parseInt(request.getParameter("number"));
+		int boardNumber = Integer.parseInt(request.getParameter("boardNumber"));
 
 		BoardDAO dao = new BoardDAO();
 		dao.boardHits(boardNumber);

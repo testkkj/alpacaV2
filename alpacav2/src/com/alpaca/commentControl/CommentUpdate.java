@@ -1,28 +1,25 @@
-package com.alpaca.boardControl;
+package com.alpaca.commentControl;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.alpaca.board.BoardDAO;
-import com.alpaca.board.BoardVO;
+import com.alpaca.comment.CommentDAO;
 
 /**
- * Servlet implementation class BoardWrite
+ * Servlet implementation class CommentUpdate
  */
-@WebServlet("/BoardWrite")
-public class BoardWrite extends HttpServlet {
+@WebServlet("/CommentUpdate")
+public class CommentUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public BoardWrite() {
+	public CommentUpdate() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -46,21 +43,16 @@ public class BoardWrite extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 
-		String id = (String) request.getSession().getAttribute("idFromServlet");
+		int boardNumber = Integer.parseInt(request.getParameter("boardNumber"));
+		int commentNumber = Integer.parseInt(request.getParameter("commentNumber"));
+		String commentContents = request.getParameter("commentContents");
 
-		BoardVO vo = new BoardVO();
-		vo.setBoardTitle(request.getParameter("boardTitle"));
-		vo.setBoardContents(request.getParameter("boardContents"));
-		vo.setBoardWriter(id);
-
-		BoardDAO dao = new BoardDAO();
-		if (dao.boardWrite(vo)) {
-			response.sendRedirect("BoardList");
+		CommentDAO dao = new CommentDAO();
+		if (dao.commentUpdate(commentNumber, commentContents)) {
+			request.getRequestDispatcher("BoardView?boardNumber=" + boardNumber + "&commentNumber=" + commentNumber).forward(request, response);
 		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("boardListError.jsp");
-			rd.forward(request, response);
+			request.getRequestDispatcher("commentUpdateError.jsp").forward(request, response);
 		}
-
 	}
 
 }

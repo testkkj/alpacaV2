@@ -1,7 +1,6 @@
-package com.alpaca.boardControl;
+package com.alpaca.commentControl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alpaca.board.BoardDAO;
-import com.alpaca.board.BoardVO;
+import com.alpaca.comment.CommentDAO;
 
 /**
- * Servlet implementation class BoardList
+ * Servlet implementation class CommentDelete
  */
-@WebServlet("/BoardList")
-public class BoardList extends HttpServlet {
+@WebServlet("/CommentDelete")
+public class CommentDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public BoardList() {
+	public CommentDelete() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -45,32 +44,16 @@ public class BoardList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int pageNumber = 1;
-		if (request.getParameter("pageNumber") != null) {
-			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-		}
-		BoardDAO dao = new BoardDAO();
-		ArrayList<BoardVO> arrayList = dao.boardList(pageNumber);
+		request.setCharacterEncoding("UTF-8");
 
-		request.setAttribute("List", arrayList);
-		request.setAttribute("pageNumber", pageNumber);
+		int boardNumber = Integer.parseInt(request.getParameter("boardNumber"));
+		int commentNumber = Integer.parseInt(request.getParameter("commentNumber"));
 
-		int tpage = dao.boardNextNumber();
-		if (tpage % 10 == 0) {
-			tpage = tpage / 10;
-		} else {
-			tpage = (tpage / 10) + 1;
-		}
+		CommentDAO dao = new CommentDAO();
+		dao.commentDelete(commentNumber);
 
-		request.setAttribute("tpage", tpage);
-
-		if (arrayList != null) {
-			RequestDispatcher rd = request.getRequestDispatcher("boardList.jsp");
-			rd.forward(request, response);
-		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("boardListError.jsp");
-			rd.forward(request, response);
-		}
+		RequestDispatcher rd = request.getRequestDispatcher("BoardView?boardNumber=" + boardNumber);
+		rd.forward(request, response);
 	}
 
 }

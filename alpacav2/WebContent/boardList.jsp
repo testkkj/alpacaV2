@@ -14,15 +14,13 @@
 <body>
 	<%
 		/*
-		@SuppressWarnings("unchecked")
 		servlet에서 arraylist<e>를 받아올때 형변환 경고 무시용
 		*/
-		int pageNumber = 1;
-		if (request.getParameter("pageNumber") != null) {
-			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-		}
+		int pageNumber = (int) request.getAttribute("pageNumber");
+		int tpage = (int) request.getAttribute("tpage");
 		BoardDAO dao = new BoardDAO();
-		ArrayList<BoardVO> arrayList = dao.boardList(pageNumber);
+		@SuppressWarnings("unchecked")
+		ArrayList<BoardVO> arrayList = (ArrayList<BoardVO>) request.getAttribute("List");
 	%>
 	<table>
 		<tr>
@@ -38,7 +36,7 @@
 		<tr>
 			<td><%=arrayList.get(i).getBoardNumber()%></td>
 			<td><a
-				href="BoardView?number=<%=arrayList.get(i).getBoardNumber()%>"><%=arrayList.get(i).getBoardTitle()%></a></td>
+				href="BoardView?boardNumber=<%=arrayList.get(i).getBoardNumber()%>"><%=arrayList.get(i).getBoardTitle()%></a></td>
 			<td><%=arrayList.get(i).getBoardWriter()%></td>
 			<td><%=arrayList.get(i).getBoardRegister()%></td>
 			<td><%=arrayList.get(i).getBoardHits()%></td>
@@ -47,32 +45,23 @@
 			}
 		%>
 	</table>
-	<%=dao.boardNextNumber()%>
-	<%if(pageNumber!=1){
-		%>
-		<a href="boardList.jsp?pageNumber=<%=pageNumber-1%>">이전</a>
-		<%
-	} if(dao.boardNextPage(pageNumber+1)) {
-		%>
-		<a href="boardList.jsp?pageNumber=<%=pageNumber+1%>">다음</a>
-		<%
-	}%>
 	<%
-		int tpage = dao.boardNextNumber();
-		if (tpage%10==0) {
-			tpage = tpage/10;
-			for (int i = 1; i <= tpage; i++) {
+		if (pageNumber != 1) {
 	%>
-	<a href="boardList.jsp?pageNumber=<%=i%>"><%=i%></a>
+	<a href="BoardList?pageNumber=<%=pageNumber - 1%>">이전</a>
 	<%
 		}
-		} else {
-			tpage = (tpage/10)+1;
-			for (int i = 1; i <= tpage; i++) {
+		if (dao.boardNextPage(pageNumber + 1)) {
 	%>
-	<a href="boardList.jsp?pageNumber=<%=i%>"><%=i%></a>
+	<a href="BoardList?pageNumber=<%=pageNumber + 1%>">다음</a>
 	<%
 		}
+	%>
+	<%
+		for (int i = 1; i <= tpage; i++) {
+	%>
+	<a href="BoardList?pageNumber=<%=i%>"><%=i%></a>
+	<%
 		}
 	%>
 	<a href="boardWrite.jsp">글작성</a>

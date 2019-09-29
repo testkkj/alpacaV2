@@ -43,7 +43,8 @@
 	<%
 		}
 	%>
-	<a href="commentWrite.jsp?boardNumber=<%=vo.getBoardNumber()%>">댓글 작성</a>
+	<a href="commentWrite.jsp?boardNumber=<%=vo.getBoardNumber()%>">댓글
+		작성</a>
 	<%
 		CommentDAO cdao = new CommentDAO();
 		ArrayList<CommentVO> arrayList = cdao.commentList(vo.getBoardNumber());
@@ -60,6 +61,14 @@
 			<td>댓글작성일</td>
 			<td><%=arrayList.get(i).getCommentRegister()%></td>
 			<td><a href="commentReplyWrite.jsp?boardNumber=<%=vo.getBoardNumber()%>&commentnumber=<%=arrayList.get(i).getCommentNumber()%>">답글 작성</a></td>
+			<%
+				if(vo.getBoardWriter().equals(session.getAttribute("idFromServlet"))){
+			%>
+			<td><a href="commentUpdate.jsp?boardNumber=<%=vo.getBoardNumber()%>&commentNumber=<%=arrayList.get(i).getCommentNumber()%>">댓글 수정</a></td>
+			<td><a href="CommentDelete?boardNumber=<%=vo.getBoardNumber()%>&commentNumber=<%=arrayList.get(i).getCommentNumber()%>">댓글 삭제</a></td>
+			<%
+				}
+			%>
 		</tr>
 	</table>
 	<%
