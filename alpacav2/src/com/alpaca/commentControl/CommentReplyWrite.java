@@ -15,14 +15,14 @@ import com.alpaca.comment.CommentVO;
 /**
  * Servlet implementation class CommentWrite
  */
-@WebServlet("/CommentWrite")
-public class CommentWrite extends HttpServlet {
+@WebServlet("/CommentReplyWrite")
+public class CommentReplyWrite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CommentWrite() {
+	public CommentReplyWrite() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -47,17 +47,24 @@ public class CommentWrite extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		int boardNumber = Integer.parseInt(request.getParameter("boardNumber"));
+		int commentNumber = Integer.parseInt(request.getParameter("commentNumber"));
+
 		String id = (String) request.getSession().getAttribute("idFromServlet");
 		String contents = request.getParameter("commentContents");
 
 		CommentVO vo = new CommentVO();
+		CommentDAO dao = new CommentDAO();
+		
+		int commentChild = dao.commentNumberFind(commentNumber);
+		
 		vo.setBoardNumber(boardNumber);
+		vo.setCommentParent(commentNumber);
+		vo.setCommentChild(commentChild);
 		vo.setCommentWriter(id);
 		vo.setCommentContents(contents);
 
-		CommentDAO dao = new CommentDAO();
-		dao.commentChildUpdate(boardNumber);
-		dao.commentWrite(vo);
+		dao.commentChildReplace(commentNumber);
+		dao.commentReplyWrite(vo);
 
 		RequestDispatcher rd = request.getRequestDispatcher("BoardView?number=" + boardNumber);
 		rd.forward(request, response);

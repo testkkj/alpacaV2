@@ -60,7 +60,7 @@
 			<td><%=arrayList.get(i).getCommentWriter()%></td>
 			<td>댓글작성일</td>
 			<td><%=arrayList.get(i).getCommentRegister()%></td>
-			<td><a href="commentReplyWrite.jsp?boardNumber=<%=vo.getBoardNumber()%>&commentnumber=<%=arrayList.get(i).getCommentNumber()%>">답글 작성</a></td>
+			<td><a href="commentReplyWrite.jsp?boardNumber=<%=vo.getBoardNumber()%>&commentNumber=<%=arrayList.get(i).getCommentNumber()%>">답글 작성</a></td>
 			<%
 				if(vo.getBoardWriter().equals(session.getAttribute("idFromServlet"))){
 			%>

@@ -14,7 +14,7 @@ public class CommentDAO {
 	
 	public ArrayList<CommentVO> commentList(int boardNumber) {
 		try {
-			String sql = "select * from comment where boardnumber = ?";
+			String sql = "select * from comment where boardnumber = ? order by commentchild desc";
 			con = DatabaseConnection.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, boardNumber);
@@ -63,6 +63,30 @@ public class CommentDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean commentChildUpdate(int boardNumber) {
+		try {
+			String sql = "update comment set commentchild = (commentchild+1) where boardnumber = ?";
+			con = DatabaseConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, boardNumber);
+			int result = ps.executeUpdate();
+			if (result == 1) {
+				System.out.println("commentChildUpdate()에서 쿼리 실행");
+				return true;
+			} else if (result == 0) {
+				System.out.println("commentChildUpdate()에서 쿼리 결과 없음");
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("commentChildUpdate()에서 에러 발생");
+		} finally {
+			DatabaseConnection.close(rs, ps, con);
+			System.out.println("commentChildUpdate()에서 데이터베이스 접속 종료");
+		}
+		return false;
 	}
 
 	public boolean commentWrite(CommentVO vo) {
@@ -136,6 +160,83 @@ public class CommentDAO {
 		} finally {
 			DatabaseConnection.close(rs, ps, con);
 			System.out.println("commentDelete()에서 데이터베이스 접속 종료");
+		}
+		return false;
+	}
+	
+	public int commentNumberFind(int commentNumber) {
+		try {
+			String sql = "select commentchild from comment where commentnumber=?";
+			con = DatabaseConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, commentNumber);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				System.out.println("commentNumberFind()에서 쿼리 실행");
+				return rs.getInt(1);
+			} else {
+				System.out.println("commentNumberFind()에서 쿼리 결과 없음");
+				return 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("commentNumberFind()에서 에러 발생");
+		} finally {
+			DatabaseConnection.close(rs, ps, con);
+			System.out.println("commentNumberFind()에서 데이터베이스 접속 종료");
+		}
+		return 0;
+	}
+	
+	public boolean commentChildReplace(int commentNumber) {
+		int replace = commentNumberFind(commentNumber);
+		try {
+			String sql = "update comment set commentchild = (commentchild+1) where commentchild >=?";
+			con = DatabaseConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, replace);
+			int result = ps.executeUpdate();
+			if (result == 1) {
+				System.out.println("commentChildReplace()에서 쿼리 실행");
+				return true;
+			} else if (result == 0) {
+				System.out.println("commentChildReplace()에서 쿼리 결과 없음");
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("commentChildReplace()에서 에러 발생");
+		} finally {
+			DatabaseConnection.close(rs, ps, con);
+			System.out.println("commentChildReplace()에서 데이터베이스 접속 종료");
+		}
+		return false;
+	}
+	
+	public boolean commentReplyWrite(CommentVO vo) {
+		try {
+			String sql = "insert into comment (boardnumber, commentparent, commentchild, commentcontents, commentwriter) values (?,?,?,?,?)";
+			con = DatabaseConnection.getConnection();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, vo.getBoardNumber());
+			ps.setInt(2, vo.getCommentParent());
+			ps.setInt(3, vo.getCommentChild());
+			ps.setString(4, vo.getCommentContents());
+			ps.setString(5, vo.getCommentWriter());
+			int result = ps.executeUpdate();
+			if (result == 1) {
+				System.out.println("commentReplyWrite()에서 쿼리 실행");
+				return true;
+			} else if (result == 0) {
+				System.out.println("commentReplyWrite()에서 쿼리 결과 없음");
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("commentReplyWrite()에서 에러 발생");
+		} finally {
+			DatabaseConnection.close(rs, ps, con);
+			System.out.println("commentReplyWrite()에서 데이터베이스 접속 종료");
 		}
 		return false;
 	}
