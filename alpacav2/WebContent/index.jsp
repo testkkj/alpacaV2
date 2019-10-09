@@ -10,12 +10,41 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<title>Document</title>
+<title>Alpaca</title>
 </head>
 <body>
 	<%
 		if (session.getAttribute("idFromServlet") == null) {
 	%>
+	<div class="container">
+	방문을 환영합니다.<br>
+	회원가입과 로그인 그리고 게시판 기능을 가진 간단한 페이지 입니다.<br><br>
+	
+	회원가입을 하시면 더 둘러 보실수 있습니다.<br><br>
+	<a class="btn btn-primary" href="memberJoin.jsp" role="button">가입하기</a>
+	&nbsp;&nbsp;&nbsp;또는&nbsp;&nbsp;&nbsp;
+	<a class="btn btn-primary" href="memberLogin.jsp" role="button">로그인</a>
+	</div>
+	<%
+		} else if (session.getAttribute("idFromServlet") != null) {
+			String idFromServlet = (String) session.getAttribute("idFromServlet");
+	%>
+	<ul class="nav nav-tabs nav-justified">
+	<li class="nav-item">
+	<a class="nav-link active" href="index.jsp">홈으로</a>
+	</li>
+	<li class="nav-item">
+	<a class="nav-link" href="BoardList">게시판</a>
+	</li>
+	<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><%=idFromServlet%>님 환영합니다.</a>
+	<div class="dropdown-menu">
+	<a class="dropdown-item" href="memberPage.jsp">회원정보 수정</a>
+	<a class="dropdown-item" href="memberDelete.jsp">회원 탈퇴</a>
+	<a class="dropdown-item" href="MemberLogout">로그아웃</a>
+	</div>
+	</li>
+	</ul>
 	<div class="container">
 	방문을 환영합니다.<br>
 	회원가입과 로그인 그리고 게시판 기능을 가진 간단한 페이지 입니다.<br><br>
@@ -32,19 +61,7 @@
 	<li>폼입력값 검사에 JS추가</li>
 	</ul>
 	등이 현재 작업 및 구상중입니다.<br><br>
-	<a class="btn btn-primary" href="memberJoin.jsp" role="button">가입하기</a>
-	&nbsp;&nbsp;&nbsp;또는&nbsp;&nbsp;&nbsp;
-	<a class="btn btn-primary" href="memberLogin.jsp" role="button">로그인</a>
 	</div>
-	<%
-		} else if (session.getAttribute("idFromServlet") != null) {
-			String idFromServlet = (String) session.getAttribute("idFromServlet");
-	%>
-	<%=idFromServlet%>님 환영합니다.
-	<a href="memberPage.jsp">회원정보 수정</a>
-	<a href="memberDelete.jsp">회원 탈퇴</a>
-	<a href="MemberLogout">로그아웃</a>
-	<a href="BoardList">게시판</a>
 	<%
 		}
 	%>
